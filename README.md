@@ -1,2 +1,2 @@
-# tech-bridge
-By combining "language" and "technology", we can connect technological needs with solutions.
+# Pulse
+Pulse — Sensing the pulse of business and technology
