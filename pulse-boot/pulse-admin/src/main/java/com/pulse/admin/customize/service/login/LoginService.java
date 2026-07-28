@@ -1,6 +1,7 @@
 package com.pulse.admin.customize.service.login;
 
 import cn.hutool.core.codec.Base64;
+import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.img.ImgUtil;
 import cn.hutool.core.util.CharsetUtil;
@@ -16,6 +17,7 @@ import com.pulse.common.exception.error.ErrorCode;
 import com.pulse.common.exception.error.ErrorCode.Business;
 import com.pulse.common.utils.ServletHolderUtil;
 import com.pulse.common.utils.i18n.MessageUtils;
+import com.pulse.domain.common.cache.GuavaCacheService;
 import com.pulse.domain.common.cache.MapCache;
 import com.pulse.domain.common.cache.RedisCacheService;
 import com.pulse.admin.customize.async.AsyncTaskFactory;
@@ -24,6 +26,7 @@ import com.pulse.admin.customize.service.login.dto.CaptchaDTO;
 import com.pulse.admin.customize.service.login.dto.ConfigDTO;
 import com.pulse.admin.customize.service.login.command.LoginCommand;
 import com.pulse.infrastructure.user.web.SystemLoginUser;
+import com.pulse.common.enums.common.ConfigKeyEnum;
 import com.pulse.common.enums.common.LoginStatusEnum;
 import com.pulse.domain.system.user.db.SysUserEntity;
 import com.google.code.kaptcha.Producer;
@@ -53,6 +56,8 @@ public class LoginService {
     private final TokenService tokenService;
 
     private final RedisCacheService redisCache;
+
+    private final GuavaCacheService guavaCache;
 
     private final AuthenticationManager authenticationManager;
 
@@ -211,7 +216,7 @@ public class LoginService {
     }
 
     private boolean isCaptchaOn() {
-        return true;
+        return Convert.toBool(guavaCache.configCache.get(ConfigKeyEnum.CAPTCHA.getValue()));
     }
 
 }

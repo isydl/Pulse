@@ -50,6 +50,11 @@ export const cdn = importToCDN({
       name: "dayjs",
       var: "dayjs",
       path: "dayjs.min.js"
+    },
+    {
+      name: "echarts",
+      var: "echarts",
+      path: "echarts.min.js"
     }
   ]
 });

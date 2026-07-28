@@ -1,284 +1,344 @@
-## 📦 总览：四个版本
 
-| 版本 | 主题 | 时间 | 核心交付 |
-|:---|:---|:---|:---|
-| v1.0 | 短链系统 | 1-2周 | 生成短链 + 跳转 + 基础统计 |
-| v2.0 | 秒杀系统 | 2-3周 | 单商品秒杀 + 库存扣减 + 订单 |
-| v3.0 | 短链+秒杀整合 | 1周 | 秒杀活动自动生成短链 + 转化漏斗 |
-| v4.0 | 能力增强 | 2-3周 | 多商品秒杀 + 限流熔断 + Docker |
+<p align="center">
+      <img src="https://img.shields.io/badge/Release-V1.8.0-green.svg" alt="Downloads">
+      <img src="https://img.shields.io/badge/JDK-1.8+-green.svg" alt="Build Status">
+  <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="Build Status">
+   <img src="https://img.shields.io/badge/Spring%20Boot-2.7.1-blue.svg" alt="Downloads">
+   <a target="_blank" href="https://bladex.vip">
+   <img src="https://img.shields.io/badge/Author-valarchie-ff69b4.svg" alt="Downloads">
+ </a>
+ <a target="_blank" href="https://bladex.vip">
+   <img src="https://img.shields.io/badge/Copyright%20-@Agileboot-%23ff3f59.svg" alt="Downloads">
+ </a>
+ </p>  
+<p align="center">
 
-**总周期：6-9周**
+<img alt="logo" height="200" src="https://oscimg.oschina.net/oscnet/up-eda2a402cc061f1f5f40d9ac4c084f4c98c.png">
+</p>
+<h1 align="center" style="margin: 30px 0 30px; font-weight: bold;">AgileBoot v2.0.0 </h1>
+<h4 align="center">基于SpringBoot+Vue3前后端分离的Java快速开发脚手架</h4>
+<p align="center">
+</p>
 
+## ⚡平台简介⚡
 
-# 🚀 v1.0：短链系统
-
-## 功能清单
-
-### 用户端
-- [ ] 输入长链接 → 生成短链（如 `pulse.com/abc123`）
-- [ ] 访问短链 → 302跳转到原始链接
-- [ ] 短链有效期设置（可选，默认永久）
-
-### 管理端
-- [ ] 短链列表（短码、原链接、点击次数、创建时间、状态）
-- [ ] 删除短链
-- [ ] 查看点击统计（总次数 + 最近7天趋势图）
-- [ ] 启用/停用短链
-
-## 三语文档产出
-
-| 序号 | 文档/内容 | 位置 | 语言 | 说明 |
-|:---|:---|:---|:---|:---|
-| 1 | README.md | 项目根目录 | 中/英/日 | 项目介绍、功能列表、技术栈、快速启动 |
-| 2 | 数据库表注释 | SQL建表语句 | **英文** | 表名、字段名COMMENT用英文（避免乱码） |
-| 3 | Knife4j API描述 | Controller代码 | 中/英/日 | `@ApiOperation`和`@ApiParam`三语 |
-| 4 | 前端界面文案 | `locales/*.json` | 中/英/日 | 菜单、按钮、表格列、提示消息 |
-| 5 | 后端提示信息 | `messages_*.properties` | 中/英/日 | 错误码、成功提示（如"短链不存在"） |
-| 6 | 代码注释（类/方法） | Java代码 | 中/英/日 | 类说明、方法说明 |
-| 7 | DEPLOY.md | 项目根目录 | 中/英/日 | 部署文档（环境要求、配置修改、启动命令） |
-
-## 技术要点
-- 发号器：数据库自增ID → Base62编码生成短码
-- 跳转性能：Redis缓存热点短链
-- 统计：每次点击异步记录（线程池或MQ）
-- 防滥用：同一IP每日生成数量限制
-
-## 验收标准
-- [ ] 能生成短链，访问能跳转
-- [ ] 短链列表能看到点击次数
-- [ ] 切换语言，界面跟着变
-- [ ] README中英日三语写完整
+AgileBoot是一套开源的全栈精简快速开发平台，毫无保留给个人及企业免费使用。本项目的目标是做一款精简可靠，代码风格优良，项目规范的小型开发脚手架。
+适合个人开发者的小型项目或者公司内部项目使用。也可作为供初学者学习使用的案例。
 
 
-# 🚀 v2.0：秒杀系统
+* 前端是基于优秀的开源项目[Pure-Admin](https://github.com/pure-admin/vue-pure-admin)开发而成。在此感谢Pure-Admin作者。
+* 前端采用Vue3、Element Plus、TypeScript、Pinia。对应前端仓库 [AgileBoot-Front-End](https://github.com/valarchie/AgileBoot-Front-End) ，保持同步更新。
+* 后端采用Spring Boot、Spring Security & Jwt、Redis & MySql、Mybatis Plus、Hutool工具包。
+* 权限认证使用Jwt，支持多终端认证系统。
+* 支持注解式主从数据库切换，注解式请求限流，注解式重复请求拦截。
+* 支持注解式菜单权限拦截，注解式数据权限拦截。
+* 支持加载动态权限菜单，实时权限控制。
+* ***有大量的单元测试，集成测试覆盖确保业务逻辑正确***。
 
-## 功能清单
+***V1.0.0版本使用JS开发，V2.0.0版本使用TS开发***。  
+***V1.0.0地址：[后端(AgileBoot-Back-End-Basic)](https://github.com/valarchie/AgileBoot-Back-End-Basic) -  [前端(AgileBoot-Front-End-Basic)](https://github.com/valarchie/AgileBoot-Front-End-Basic)***
 
-### 管理端
-- [ ] 创建秒杀活动（商品名称、秒杀价、库存数量、开始/结束时间、每人限购数量）
-- [ ] 活动列表（状态：未开始/进行中/已结束）
-- [ ] 活动状态手动控制（启用/停用）
-- [ ] 秒杀订单列表（用户、商品、数量、金额、状态、下单时间）
-- [ ] 订单导出（Excel）
-
-### 用户端
-- [ ] 秒杀商品展示页（倒计时、实时库存显示）
-- [ ] 点击"立即抢购" → 下单（极简流程，无购物车）
-- [ ] 下单结果反馈（成功/排队中/已售罄/已限购）
-- [ ] 我的秒杀订单（待支付/已支付/已取消）
-- [ ] 待支付订单支付（模拟支付即可）
-
-## 三语文档产出
-
-| 序号 | 文档/内容 | 位置 | 语言 | 说明 |
-|:---|:---|:---|:---|:---|
-| 1 | README.md 更新 | 项目根目录 | 中/英/日 | 追加秒杀模块功能说明 |
-| 2 | Knife4j API描述（新增接口） | Controller代码 | 中/英/日 | 秒杀相关接口三语 |
-| 3 | 前端界面文案（新增页面） | `locales/*.json` | 中/英/日 | 秒杀活动管理、订单列表等 |
-| 4 | 业务错误码 | `messages_*.properties` | 中/英/日 | "库存不足"、"已售罄"、"已限购"等 |
-| 5 | 秒杀流程图 | `docs/` | 中/英/日 | 展示秒杀流程的说明文档（含图） |
-| 6 | 数据库表注释（新增表） | SQL | **英文** | 秒杀活动表、订单表 |
-| 7 | 代码注释（新增类/方法） | Java代码 | 中/英/日 | 秒杀核心逻辑的三语注释 |
-
-## 技术要点
-- **防超卖**：Redis Lua脚本原子性扣库存
-- **库存预热**：活动开始前将库存加载到Redis
-- **限流**：接口层令牌桶限流（Guava RateLimiter）
-- **异步下单**：MQ削峰（RabbitMQ）
-- **订单超时回滚**：延迟消息释放库存
-- **重复下单**：Redis记录用户ID+活动ID防重
-
-## 验收标准
-- [ ] 后台能创建秒杀活动
-- [ ] 前台能抢购，库存扣减正确
-- [ ] 库存为0时返回"已售罄"
-- [ ] 同一用户不能重复下单
-- [ ] 超时未支付订单自动取消，库存回滚
-- [ ] 所有提示信息三语切换正确
+> 有任何问题或者建议，可以在 _Issues_ 中提给作者。  
+> 
+> 您的Issue比Star更重要
+>
+> 如果觉得项目对您有帮助，可以来个Star ⭐
 
 
-# 🚀 v3.0：短链 + 秒杀整合
-
-## 功能清单
-
-### 整合点
-- [ ] 创建秒杀活动时，系统自动生成一个专属短链
-- [ ] 短链指向秒杀活动页面（如 `pulse.com/s/abc123` → 秒杀详情页）
-- [ ] 短链详情页关联秒杀活动ID
-- [ ] 运营看板：转化漏斗（短链点击量 → 秒杀下单量 → 支付成功量）
-
-### 看板页面
-- [ ] 今日数据概览（短链新增数、秒杀活动数、总订单数）
-- [ ] 各活动转化率排行
-- [ ] 近7天点击/下单趋势图
-
-## 三语文档产出
-
-| 序号 | 文档/内容 | 位置 | 语言 | 说明 |
-|:---|:---|:---|:---|:---|
-| 1 | README.md 全面更新 | 项目根目录 | 中/英/日 | 介绍"短链+秒杀"完整解决方案 |
-| 2 | 看板页面文案 | `locales/*.json` | 中/英/日 | 数据看板所有文案 |
-| 3 | 系统整体架构图 | `docs/architecture/` | 中/英/日 | 前后端架构+数据流说明（三语标注） |
-| 4 | 项目演示视频脚本 | `docs/demo-script/` | 中/英/日 | 演示视频的旁白或字幕 |
-| 5 | 接口文档整合 | Knife4j | 中/英/日 | 所有接口统一三语 |
-| 6 | 术语表 TERMINOLOGY.md | 项目根目录 | 中/英/日 | 固定核心术语的翻译对照表 |
-
-## 验收标准
-- [ ] 创建秒杀活动自动生成短链
-- [ ] 点击短链跳转到秒杀页
-- [ ] 看板能展示点击→下单→支付转化数据
+## 💥 在线体验 💥
+演示地址：
+- www.agileboot.vip
+- www.agileboot.cc
+>  账号密码：admin/admin123
 
 
-# 🚀 v4.0：能力增强（可选）
-
-## 功能清单
-- [ ] 多商品秒杀（一个活动多个商品同时抢购）
-- [ ] Sentinel限流熔断（展示服务降级策略）
-- [ ] JMeter压测报告（展示QPS数据）
-- [ ] 邮件/短信通知三语模板
-- [ ] Docker Compose一键部署
-
-## 三语文档产出
-
-| 序号 | 文档/内容 | 位置 | 语言 | 说明 |
-|:---|:---|:---|:---|:---|
-| 1 | 压测报告 | `docs/benchmark/` | 中/英/日 | JMeter压测结果、QPS数据 |
-| 2 | Docker使用说明 | README追加 | 中/英/日 | docker-compose使用步骤 |
-| 3 | 技术选型说明 | `docs/tech-stack/` | 中/英/日 | 为什么选这些技术栈 |
-| 4 | 项目总结文档 | `docs/summary/` | 中/英/日 | 项目整体回顾、心得 |
-
-## 验收标准
-- [ ] 压测QPS数据展示在README
-- [ ] 一键docker-compose up能跑起来
+## 🌴 项目背景 🌴
+业余时间想做一些个人小项目，一开始找了很多开源项目比如Ruoyi / Jeecg / ElAdmin / RenRen-Fast / Guns / EAdmin  
+最后本项目选择基于Ruoyi项目进行完全重构改造。  
+首先非常感谢Ruoyi作者。但是Ruoyi项目存在太多缺陷。
+- 命名比较乱七八糟（很多很糟糕的命名，包括机翻英语乱用）
+- 项目分包以及模块比较乱
+- 比较原始的Controller > Service > DAO的开发模式。过于面向过程。
+- 一大堆自己造的轮子，并且没有UT覆盖。
+- 大量逻辑嵌套在if else块当中
+- 值的前后不统一，比如有的地方1代表是，有的地方1代表否
+- 很多很奇怪的代码写法（比如return result > 0 ? true:false..    一言难尽）
+- 业务逻辑不集中，代码可读性较差。
 
 
-## 💻 代码里的三语注释还能写在哪？
+于是我做了大量的重构工作。
 
-除了日志之外，这些地方也都可以写三语注释：
+### 重构内容
 
-### 1. 类级别注释（告诉别人这个类是干什么的）
+- 规范：
+    - 切分不同环境的启动文件
+    - 统一设计异常类
+    - 统一设计错误码并集中处理异常
+    - 统一系统内的变量并集中管理
+    - 统一返回模型
+    - 引入Google代码格式化模板
+    - 后端代码的命名基本都整改OK
+    - 前端代码的命名也非常混乱，进行了整改
+    - 规范系统内的常量
+- 整改：
+    - 引入hutool包以及guava包去掉大量自己造的轮子，尽可能使用现成的轮子
+    - 去除代码中大量的warning
+    - 引入lombok去除大量getter setter代码
+    - 调整日志级别
+    - 字典类型数据完全用Enum进行代替
+    - 移除SQL注入的Filter，因为迁移到Mybatis Plus就不会有这个注入的问题
+    - XSS直接通过JSON序列化进行转义。
+    - 替换掉很多Deprecated的类以及配置
+    - 替换fastJson为Jackson
+    - 数据库的整体重构设计，缩减至10张表。
+    - 重新设计异步代码
+    - 前后端密码加密传输（更严谨的话，还是需要HTTPS）
+    - 重构权限校验和数据权限校验（直接都通过注解的形式）
+- 优化：
+    - 优化异步服务
+    - 优化Redis缓存类，封装各个业务缓存，提供多级缓存实现（Redis+Guava）
+    - 提供三个层级的缓存供使用者调用（Map,Guava,Redis使用者可依情况选择使用哪个缓存类）
+    - 权限判断使用多级缓存
+    - IP地址查询引入离线包
+    - 前端优化字典数据缓存
+    - 启动优化
+    - i18n支持
+    - 优化excel工具类，代码更加简洁
+    - 将所有逻辑集中于Domain模块中
+    - 切面记录修改者和创建者
+    - 统一设置事务
 
-```java
-/**
- * 短链服务
- * Short Link Service
- * ショートリンクサービス
- */
-@Service
-public class ShortLinkService {
-    // ...
-}
+## ✨ 使用 ✨
+
+
+### 开发环境
+
+- JDK
+- Mysql
+- Redis
+- Node.js
+
+### 技术栈
+
+| 技术             | 说明              | 版本                |
+|----------------|-----------------|-------------------|
+| `springboot`   | Java项目必备框架      | 2.7               |
+| `druid`        | alibaba数据库连接池   | 1.2.8             |
+| `springdoc`    | 文档生成            | 3.0.0             |
+| `mybatis-plus` | 数据库框架           | 3.5.2             |
+| `hutool`       | 国产工具包（简单易用）     | 3.5.2             |
+| `mockito`      | 单元测试模拟          | 1.10.19           |
+| `guava`        | 谷歌工具包（提供简易缓存实现） | 31.0.1-jre        |
+| `junit`        | 单元测试            | 1.10.19           |
+| `h2`           | 内存数据库           | 1.10.19           |
+| `jackson`      | 比较安全的Json框架     | follow springboot |
+| `knife4j`      | 接口文档框架          | 3.0.3             |
+| `Spring Task`  | 定时任务框架（适合小型项目）  | follow springboot |
+
+
+### 启动说明
+
+#### 前置准备： 下载前后端代码
+
+```
+git clone https://github.com/valarchie/AgileBoot-Back-End
+git clone https://github.com/valarchie/AgileBoot-Front-End
 ```
 
-### 2. 方法级别注释（告诉别人这个方法干什么、参数是什么、返回什么）
+#### 安装好Mysql和Redis
 
-```java
-/**
- * 生成短链
- * Generate a short link
- * ショートリンクを生成する
- *
- * @param originalUrl 原始链接 / Original URL / 元のURL
- * @param expireDays  有效期天数 / Expiration days / 有効期限（日）
- * @return 短链信息 / Short link info / ショートリンク情報
- */
-public ShortLinkVO generateShortLink(String originalUrl, Integer expireDays) {
-    // ...
-}
+
+#### 后端启动
+```
+1. 生成所需的数据库表
+找到后端项目根目录下的sql目录中的agileboot_xxxxx.sql脚本文件(取最新的sql文件)。 导入到你新建的数据库中。
+
+2. 在admin模块底下，找到resource目录下的application-dev.yml文件
+配置数据库以及Redis的 地址、端口、账号密码
+
+3. 在根目录执行mvn install
+
+4. 找到agileboot-admin模块中的AgileBootAdminApplication启动类，直接启动即可
+
+5. 当出现以下字样即为启动成功
+  ____   _                _                                                           __         _  _ 
+ / ___| | |_  __ _  _ __ | |_   _   _  _ __    ___  _   _   ___  ___  ___  ___  ___  / _| _   _ | || |
+ \___ \ | __|/ _` || '__|| __| | | | || '_ \  / __|| | | | / __|/ __|/ _ \/ __|/ __|| |_ | | | || || |
+  ___) || |_| (_| || |   | |_  | |_| || |_) | \__ \| |_| || (__| (__|  __/\__ \\__ \|  _|| |_| || ||_|
+ |____/  \__|\__,_||_|    \__|  \__,_|| .__/  |___/ \__,_| \___|\___|\___||___/|___/|_|   \__,_||_|(_)
+                                      |_|                             
+
 ```
 
-### 3. 复杂业务逻辑的段落注释
+#### 前端启动
+详细步骤请查看对应前端部分
 
-```java
-// 1. 检查库存是否充足 / Check stock availability / 在庫を確認
-// 2. 原子性扣减库存 / Atomically decrement stock / 在庫をアトミックに減少
-// 3. 生成订单 / Generate order / 注文を生成
+```
+1. pnpm install
+
+2. pnpm run dev
+
+3. 当出现以下字样时即为启动成功
+
+vite v2.6.14 dev server running at:
+
+> Local: http://127.0.0.1:80/
+
+ready in 4376ms.
+
 ```
 
-### 4. 字段级别注释（实体类/DTO）
+详细过程在这个文章中：[AgileBoot - 手把手一步一步带你Run起全栈项目(SpringBoot+Vue3)](https://juejin.cn/post/7153812187834744845)
 
-```java
-public class ShortLink {
-    /** 短码 / Short code / ショートコード */
-    private String shortCode;
-    
-    /** 点击次数 / Click count / クリック数 */
-    private Integer clickCount;
-}
+
+> 对于想要尝试全栈项目的前端人员，这边提供更简便的后端启动方式，无需配置Mysql和Redis直接启动
+#### 无Mysql/Redis 后端启动
+```
+1. 找到agilboot-admin模块下的resource文件中的application.yml文件
+
+2. 配置以下两个值
+spring.profiles.active: basic,dev
+改为
+spring.profiles.active: basic,test
+
+agileboot.embedded.mysql: false
+agileboot.embedded.redis: false
+改为
+agileboot.embedded.mysql: true
+agileboot.embedded.redis: true
+
+请注意:高版本的MacOS系统，无法启动内置的Redis
+
+
+3. 找到agileboot-admin模块中的AgileBootAdminApplication启动类，直接启动即可
 ```
 
-### 5. 枚举类注释
 
-```java
-/**
- * 订单状态
- * Order Status
- * 注文ステータス
- */
-public enum OrderStatus {
-    /** 待支付 / Pending / 未決済 */
-    PENDING,
-    /** 已支付 / Paid / 決済済み */
-    PAID,
-    /** 已取消 / Cancelled / キャンセル */
-    CANCELLED
-}
+## 🙊 系统内置功能 🙊  
+  
+
+🙂 大部分功能，均有通过 **单元测试** **集成测试** 保证质量。
+
+|     | 功能    | 描述                              |
+|-----|-------|---------------------------------|
+|     | 用户管理  | 用户是系统操作者，该功能主要完成系统用户配置          |
+| ⭐   | 部门管理  | 配置系统组织机构（公司、部门、小组），树结构展现支持数据权限  |
+| ⭐   | 岗位管理  | 配置系统用户所属担任职务                    |
+|     | 菜单管理  | 配置系统菜单、操作权限、按钮权限标识等，本地缓存提供性能    |
+| ⭐   | 角色管理  | 角色菜单权限分配、设置角色按机构进行数据范围权限划分      |
+|     | 参数管理  | 对系统动态配置常用参数                     |
+|     | 通知公告  | 系统通知公告信息发布维护                    |
+| 🚀  | 操作日志  | 系统正常操作日志记录和查询；系统异常信息日志记录和查询     |
+|     | 登录日志  | 系统登录日志记录查询包含登录异常                |
+|     | 在线用户  | 当前系统中活跃用户状态监控                   |
+|     | 系统接口  | 根据业务代码自动生成相关的api接口文档            |
+|     | 服务监控  | 监视当前系统CPU、内存、磁盘、堆栈等相关信息         |
+|     | 缓存监控  | 对系统的缓存信息查询，命令统计等                |
+|     | 连接池监视 | 监视当前系统数据库连接池状态，可进行分析SQL找出系统性能瓶颈 |
+
+
+## 🐯 工程结构 🐯
+
+``` 
+agileboot
+├── agileboot-admin -- 管理后台接口模块（供后台调用）
+│
+├── agileboot-api -- 开放接口模块（供客户端调用）
+│
+├── agileboot-common -- 精简基础工具模块
+│
+├── agileboot-infrastructure -- 基础设施模块（主要是配置和集成，不包含业务逻辑）
+│
+├── agileboot-domain -- 业务模块
+├    ├── user -- 用户模块（举例）
+├         ├── command -- 命令参数接收模型（命令）
+├         ├── dto -- 返回数据类
+├         ├── db -- DB操作类
+├              ├── entity -- 实体类
+├              ├── service -- DB Service
+├              ├── mapper -- DB Dao
+├         ├── model -- 领域模型类
+├         ├── query -- 查询参数模型（查询）
+│         ├────── UserApplicationService -- 应用服务（事务层，操作领域模型类完成业务逻辑）
+
 ```
 
-### 6. 配置文件注释（application.yml）
+### 代码流转
 
-```yaml
-# 秒杀配置 / Flash Sale Config / フラッシュセール設定
-seckill:
-  # 库存预热阈值（低于此值从DB加载） / Stock warm-up threshold / 在庫ウォームアップ閾値
-  stock-warm-threshold: 100
-  # 限流QPS / Rate limit QPS / レート制限QPS
-  rate-limit: 1000
+请求分为两类：一类是查询，一类是操作（即对数据有进行更新）。
+
+**查询**：Controller > xxxQuery > xxxApplicationService > xxxService(Db) > xxxMapper  
+**操作**：Controller > xxxCommand > xxxApplicationService > xxxModel(处理逻辑) > save 或者 update (本项目直接采用JPA的方式进行插入已经更新数据)
+
+这是借鉴CQRS的开发理念，将查询和操作分开处理。操作类的业务实现借鉴了DDD战术设计的理念，使用领域类，工厂类更面向对象的实现逻辑。 
+如果你不太适应这样的开发模式的话。可以在domain模块中按照你之前从Controller->Service->DAO的模式进行开发。it is up to you.
+
+
+
+### 二次开发指南
+
+假设你要新增一个会员member业务，可以在以下三个模块新增对应的包来实现你的业务
+``` 
+agileboot
+├── agileboot-admin -- 
+│                ├── member -- 会员模块
+│
+├── agileboot-domain -- 
+├                ├── member -- 会员模块（举例）
+├                     ├── command -- 命令参数接收模型（命令）
+├                     ├── dto -- 返回数据类
+├                     ├── db -- DB操作类
+├                          ├── entity -- 实体类
+├                          ├── service -- DB Service
+├                          ├── mapper -- DB Dao
+├                     ├── model -- 领域模型类
+├                     ├── query -- 查询参数模型（查询）
+│                     ├────── MemberApplicationService -- 应用服务（事务层，操作领域模型类完成业务逻辑）
+└─
 ```
 
-### 7. SQL映射文件（Mapper.xml）
-
-```xml
-<!-- 原子性扣减库存 / Atomically decrement stock / 在庫をアトミックに減少 -->
-<update id="decrementStock">
-    UPDATE product SET stock = stock - 1 
-    WHERE id = #{productId} AND stock > 0
-</update>
-```
-
-### 8. 前端组件注释（Vue文件）
-
-```vue
-<script setup>
-// 短链列表组件 / Short Link List Component / ショートリンクリストコンポーネント
-</script>
-```
-
-### 📝 注释策略建议
-
-| 注释位置 | 三语写法 | 理由 |
-|:---|:---|:---|
-| **类/方法/字段** | 完整三语 | 这是代码的"门面"，别人第一眼看到 |
-| **复杂逻辑段落** | 中英双语 | 日文可简略或省略，避免注释太重 |
-| **简单getter/setter** | 不写或只写英文 | 没必要三语，代码本身已自解释 |
-| **配置文件** | 中英双语 | 日文可简略 |
-
-### ⚠️ 不要过度注释
-
-没必要每行都写三语注释。**只在关键位置写**：
-- 对外暴露的接口类和方法（Controller、Service接口）
-- 核心业务逻辑方法（秒杀扣库存、短链生成算法）
-- 实体类和DTO的字段
-- 复杂判断条件的说明
-
-**getter/setter、简单的CRUD方法、循环变量等不需要。**
 
 
-## 🎯 你现在就可以开始了
+--- 
 
-1. **创建项目骨架**（Spring Boot + Vue 3）
-2. **配置好三语基础设施**（后端MessageSource + 前端Vue-i18n）
-3. **写v1.0的README中文版**
-4. **建短链的表**
+## 🎅 技术文档 🎅
+* [AgileBoot - 基于SpringBoot + Vue3的前后端快速开发脚手架](https://juejin.cn/post/7152871067151777829)
+* [AgileBoot - 手把手一步一步带你Run起全栈项目(SpringBoot+Vue3)](https://juejin.cn/post/7153812187834744845)
+* [AgileBoot - 项目内统一的错误码设计](https://juejin.cn/post/7156062116712022023)
+* [AgileBoot - 如何集成内置数据库H2和内置Redis](https://juejin.cn/post/7158793441198112781)
+* [AgileBoot - Mybatis Plus 框架项目落地实践总结](https://juejin.cn/post/7202573260659195963)
+* [AgileBoot - SpringBoot项目多层级多环境yml设计](https://juejin.cn/post/7205171975647215676)
+* [AgileBoot - 项目中多级缓存设计实践总结](https://juejin.cn/post/7208112485764857914)
+* 持续输出中
 
-需要我帮你把**v1.0的建表语句**直接列出来吗？这是你动手的第一步。😊
+
+
+## 🌻 注意事项 🌻
+- IDEA会自动将.properties文件的编码设置为ISO-8859-1,请在Settings > Editor > File Encodings > Properties Files > 设置为UTF-8
+- 请导入统一的代码格式化模板（Google）: Settings > Editor > Code Style > Java > 设置按钮 > import schema > 选择项目根目录下的GoogleStyle.xml文件
+- 如需要生成新的表，请使用CodeGenerator类进行生成。
+  - 填入数据库地址，账号密码，库名。然后填入所需的表名执行代码即可。（大概看一下代码就知道怎么填啦）
+  - 生成的类在infrastructure模块下的target/classes目录下
+  - 不同的数据库keywordsHandler方法请填入对应不同数据库handler。（搜索keywordsHandler关键字）
+- 项目基础环境搭建，请参考docker目录下的指南搭建。保姆级启动说明：
+  - [AgileBoot - 手把手一步一步带你Run起全栈项目(SpringBoot+Vue3)](https://juejin.cn/post/7153812187834744845)
+- 注意：管理后台的后端启动类是AgileBoot**Admin**Application
+- Swagger的API地址为 http://localhost:8080/v3/api-docs
+
+## 🎬 AgileBoot全栈交流群 🎬
+
+QQ群：  [![加入QQ群](https://img.shields.io/badge/1398880-blue.svg)](https://qm.qq.com/cgi-bin/qm/qr?k=TR5guoXS0HssErVWefmdFRirJvfpEvp1&jump_from=webapi&authKey=VkWMmVhp/pNdWuRD8sqgM+Sv2+Vy2qCJQSeLmeXlLtfER2RJBi6zL56PdcRlCmTs) 点击按钮入群。
+
+
+如果觉得该项目对您有帮助，可以小额捐赠支持本项目演示网站服务器等费用~
+
+
+<img alt="logo" height="200" src="https://oscimg.oschina.net/oscnet/up-28b63fdd7b3ce003bd30c25883f2276212b.png">
+
+## 💕 特别鸣谢
+
+
+- <a href="https://github.com/FerryboatSeranade" target="_blank">@pokr</a> 感谢提供ChatGpt账号助力本项目开发
+
+## 💒 相关框架
+- 基于node.js开发的后端 <a href="https://gitee.com/TsMask/mask_api_midwayjs" target="_blank">Midwayjs</a> 

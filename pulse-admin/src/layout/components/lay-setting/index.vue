@@ -11,6 +11,7 @@ import {
 } from "vue";
 import { useI18n } from "vue-i18n";
 import { emitter } from "@/utils/mitt";
+import LayPanel from "../lay-panel/index.vue";
 import { useNav } from "@/layout/hooks/useNav";
 import { useAppStoreHook } from "@/store/modules/app";
 import { useMultiTagsStoreHook } from "@/store/modules/multiTags";
@@ -314,7 +315,7 @@ onUnmounted(() => removeMatchMedia);
 </script>
 
 <template>
-  <div>
+  <LayPanel>
     <div class="p-5">
       <p :class="pClass">{{ t("panel.pureOverallStyle") }}</p>
       <Segmented
@@ -414,6 +415,7 @@ onUnmounted(() => removeMatchMedia);
         />
         <button
           v-else
+          v-ripple="{ class: 'text-gray-300' }"
           class="bg-transparent flex-c w-full h-20 rounded-md border border-[var(--pure-border-color)]"
           @click="setStretch(!settings.stretch)"
         >
@@ -515,7 +517,7 @@ onUnmounted(() => removeMatchMedia);
         </li>
       </ul>
     </div>
-  </div>
+  </LayPanel>
 </template>
 
 <style lang="scss" scoped>

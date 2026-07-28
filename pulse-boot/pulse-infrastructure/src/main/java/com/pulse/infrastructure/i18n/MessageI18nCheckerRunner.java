@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class MessageI18nCheckerRunner implements ApplicationRunner {
 
-    @Value("pulse.checkI18nKey")
+    @Value("${pulse.checkI18nKey}")
     private String checkI18nKey;
 
     public static Object[] allErrorCodes = ArrayUtil.addAll(

@@ -4,8 +4,11 @@ import cn.hutool.core.bean.BeanUtil;
 import com.pulse.common.annotation.ExcelColumn;
 import com.pulse.common.annotation.ExcelSheet;
 import com.pulse.domain.common.cache.CacheCenter;
+import com.pulse.domain.system.dept.db.SysDeptEntity;
+import com.pulse.domain.system.post.db.SysPostEntity;
 import com.pulse.domain.system.role.db.SysRoleEntity;
 import com.pulse.domain.system.user.db.SysUserEntity;
+import com.pulse.domain.system.user.db.SearchUserDO;
 import java.util.Date;
 import lombok.Data;
 
@@ -20,6 +23,11 @@ public class UserDTO {
         if (entity != null) {
             BeanUtil.copyProperties(entity, this);
 
+            SysDeptEntity dept = CacheCenter.deptCache.get(entity.getDeptId() + "");
+            if (dept != null) {
+                this.deptName = dept.getDeptName();
+            }
+
             SysUserEntity creator = CacheCenter.userCache.getObjectById(entity.getCreatorId());
             if (creator != null) {
                 this.creatorName = creator.getUsername();
@@ -29,11 +37,35 @@ public class UserDTO {
                 SysRoleEntity roleEntity = CacheCenter.roleCache.getObjectById(entity.getRoleId());
                 this.roleName = roleEntity != null ? roleEntity.getRoleName() : "";
             }
+
+            if (entity.getPostId() != null) {
+                SysPostEntity post = CacheCenter.postCache.getObjectById(entity.getRoleId());
+                this.postName = post != null ? post.getPostName() : "";
+            }
+
         }
     }
 
+    public UserDTO(SearchUserDO entity) {
+        if (entity != null) {
+            BeanUtil.copyProperties(entity, this);
+
+            if (entity.getRoleId() != null) {
+                SysRoleEntity roleEntity = CacheCenter.roleCache.getObjectById(entity.getRoleId());
+                this.roleName = roleEntity != null ? roleEntity.getRoleName() : "";
+            }
+        }
+    }
+
+
     @ExcelColumn(name = "用户ID")
     private Long userId;
+
+    @ExcelColumn(name = "职位ID")
+    private Long postId;
+
+    @ExcelColumn(name = "职位名称")
+    private String postName;
 
     @ExcelColumn(name = "角色ID")
     private Long roleId;
@@ -43,6 +75,9 @@ public class UserDTO {
 
     @ExcelColumn(name = "部门ID")
     private Long deptId;
+
+    @ExcelColumn(name = "部门名称")
+    private String deptName;
 
     @ExcelColumn(name = "用户名")
     private String username;

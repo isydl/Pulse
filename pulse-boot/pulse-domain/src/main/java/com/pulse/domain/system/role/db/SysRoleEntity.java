@@ -12,7 +12,12 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
+ * <p>
  * 角色信息表
+ * </p>
+ *
+ * @author valarchie
+ * @since 2022-10-02
  */
 @Getter
 @Setter
@@ -53,6 +58,7 @@ public class SysRoleEntity extends BaseEntity<SysRoleEntity> {
     @ApiModelProperty("备注")
     @TableField("remark")
     private String remark;
+
 
     @Override
     public Serializable pkVal() {

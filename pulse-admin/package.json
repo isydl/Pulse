@@ -1,5 +1,5 @@
 {
-  "name": "pulse-admin",
+  "name": "pure-admin-thin",
   "version": "6.2.0",
   "private": true,
   "type": "module",
@@ -22,16 +22,31 @@
     "preinstall": "npx only-allow pnpm"
   },
   "keywords": [
-    "pulse-admin",
+    "pure-admin-thin",
+    "vue-pure-admin",
     "element-plus",
     "tailwindcss",
+    "pure-admin",
     "typescript",
     "pinia",
     "vue3",
     "vite",
     "esm"
   ],
+  "homepage": "https://github.com/pure-admin/pure-admin-thin/tree/i18n",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pure-admin/pure-admin-thin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pure-admin/vue-pure-admin/issues"
+  },
   "license": "MIT",
+  "author": {
+    "name": "xiaoxian521",
+    "email": "pureadmin@163.com",
+    "url": "https://github.com/xiaoxian521"
+  },
   "dependencies": {
     "@pureadmin/descriptions": "^1.2.1",
     "@pureadmin/table": "^3.3.0",
@@ -41,6 +56,7 @@
     "animate.css": "^4.1.1",
     "axios": "^1.12.2",
     "dayjs": "^1.11.18",
+    "echarts": "^6.0.0",
     "element-plus": "^2.11.5",
     "js-cookie": "^3.0.5",
     "localforage": "^1.10.0",

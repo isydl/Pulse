@@ -49,15 +49,15 @@ public class CodeGenerator {
         // 默认读取application-dev yml中的master数据库配置
 //        JSON ymlJson = JSONUtil.parse(new Yaml().load(ResourceUtil.getStream("application-dev.yml")));
 
-        String databaseUrl = "jdbc:mysql://localhost:33067/pulse-pure";
+        String databaseUrl = "jdbc:mysql://localhost:3306/agileboot-pure";
         String username = "root";
-        String password = "12345";
+        String password = "root_pwd";
 
         CodeGenerator generator = CodeGenerator.builder()
             .databaseUrl(databaseUrl)
             .username(username)
             .password(password)
-            .author("valarchie")
+            .author("pulse-team")
             //生成的类 放在orm子模块下的/target/generated-code目录底下
             .module("/pulse-orm/target/generated-code")
             .parentPackage("com.pulse")

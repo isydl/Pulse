@@ -3,11 +3,14 @@ package com.pulse.admin.controller.common;
 import cn.hutool.core.util.StrUtil;
 import com.pulse.common.config.PulseConfig;
 import com.pulse.common.core.dto.ResponseDTO;
+import com.pulse.common.exception.ApiException;
+import com.pulse.common.exception.error.ErrorCode.Business;
 import com.pulse.domain.common.dto.CurrentLoginUserDTO;
 import com.pulse.domain.common.dto.TokenDTO;
 import com.pulse.domain.system.menu.MenuApplicationService;
 import com.pulse.domain.system.menu.dto.RouterDTO;
 import com.pulse.domain.system.user.UserApplicationService;
+import com.pulse.domain.system.user.command.AddUserCommand;
 import com.pulse.infrastructure.annotations.ratelimit.RateLimit;
 import com.pulse.infrastructure.annotations.ratelimit.RateLimit.CacheType;
 import com.pulse.infrastructure.annotations.ratelimit.RateLimit.LimitType;
@@ -126,5 +129,11 @@ public class LoginController {
         return ResponseDTO.ok(routerTree);
     }
 
+
+    @Operation(summary = "注册接口", description = "暂未实现")
+    @PostMapping("/register")
+    public ResponseDTO<Void> register(@RequestBody AddUserCommand command) {
+        return ResponseDTO.fail(new ApiException(Business.COMMON_UNSUPPORTED_OPERATION));
+    }
 
 }

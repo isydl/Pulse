@@ -12,12 +12,17 @@ import lombok.Getter;
 import lombok.Setter;
 
 /**
+ * <p>
  * 角色和菜单关联表
+ * </p>
+ *
+ * @author valarchie
+ * @since 2022-10-02
  */
 @Getter
 @Setter
 @TableName("sys_role_menu")
-@ApiModel(value = "SysRoleMenuEntity对象", description = "角色和菜单关联表")
+@ApiModel(value = "SysRoleMenuXEntity对象", description = "角色和菜单关联表")
 public class SysRoleMenuEntity extends Model<SysRoleMenuEntity> {
 
     private static final long serialVersionUID = 1L;
@@ -29,6 +34,7 @@ public class SysRoleMenuEntity extends Model<SysRoleMenuEntity> {
     @ApiModelProperty("菜单ID")
     @TableField("menu_id")
     private Long menuId;
+
 
     @Override
     public Serializable pkVal() {

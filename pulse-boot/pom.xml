@@ -178,6 +178,13 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <!-- app预留接口-->
+            <dependency>
+                <groupId>com.pulse</groupId>
+                <artifactId>pulse-api</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+
             <!-- 核心业务领域-->
             <dependency>
                 <groupId>com.pulse</groupId>
@@ -289,6 +296,7 @@
 
     <modules>
         <module>pulse-admin</module>
+        <module>pulse-api</module>
         <module>pulse-common</module>
         <module>pulse-domain</module>
         <module>pulse-infrastructure</module>
@@ -334,18 +342,6 @@
                         <source>${java.version}</source>
                         <target>${java.version}</target>
                         <encoding>${project.build.sourceEncoding}</encoding>
-                        <annotationProcessorPaths>
-                            <path>
-                                <groupId>org.projectlombok</groupId>
-                                <artifactId>lombok</artifactId>
-                                <version>${lombok.version}</version>
-                            </path>
-                            <path>
-                                <groupId>org.springframework.boot</groupId>
-                                <artifactId>spring-boot-configuration-processor</artifactId>
-                                <version>${spring.boot.version}</version>
-                            </path>
-                        </annotationProcessorPaths>
                     </configuration>
                 </plugin>
                 <plugin>

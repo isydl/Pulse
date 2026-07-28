@@ -5,8 +5,10 @@ import com.pulse.infrastructure.cache.RedisUtil;
 import com.pulse.infrastructure.cache.redis.CacheKeyEnum;
 import com.pulse.infrastructure.cache.redis.RedisCacheTemplate;
 import com.pulse.infrastructure.user.web.SystemLoginUser;
+import com.pulse.domain.system.post.db.SysPostEntity;
 import com.pulse.domain.system.role.db.SysRoleEntity;
 import com.pulse.domain.system.user.db.SysUserEntity;
+import com.pulse.domain.system.post.db.SysPostService;
 import com.pulse.domain.system.role.db.SysRoleService;
 import com.pulse.domain.system.user.db.SysUserService;
 import java.io.Serializable;
@@ -15,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 /**
- * Redis 缓存服务
+ * @author valarchie
  */
 @Component
 @RequiredArgsConstructor
@@ -27,6 +29,10 @@ public class RedisCacheService {
     public RedisCacheTemplate<SystemLoginUser> loginUserCache;
     public RedisCacheTemplate<SysUserEntity> userCache;
     public RedisCacheTemplate<SysRoleEntity> roleCache;
+
+    public RedisCacheTemplate<SysPostEntity> postCache;
+
+//    public RedisCacheTemplate<RoleInfo> roleModelInfoCache;
 
     @PostConstruct
     public void init() {
@@ -51,6 +57,26 @@ public class RedisCacheService {
             }
         };
 
+//        roleModelInfoCache = new RedisCacheTemplate<RoleInfo>(redisUtil, CacheKeyEnum.ROLE_MODEL_INFO_KEY) {
+//            @Override
+//            public RoleInfo getObjectFromDb(Object id) {
+//                UserDetailsService userDetailsService = SpringUtil.getBean(UserDetailsService.class);
+//                return userDetailsService.getRoleInfo((Long) id);
+//            }
+//
+//        };
+
+        postCache = new RedisCacheTemplate<SysPostEntity>(redisUtil, CacheKeyEnum.POST_ENTITY_KEY) {
+            @Override
+            public SysPostEntity getObjectFromDb(Object id) {
+                SysPostService postService = SpringUtil.getBean(SysPostService.class);
+                return postService.getById((Serializable) id);
+            }
+
+        };
+
+
     }
+
 
 }

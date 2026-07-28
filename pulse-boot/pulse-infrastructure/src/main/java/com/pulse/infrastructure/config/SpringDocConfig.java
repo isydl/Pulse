@@ -15,12 +15,12 @@ import org.springframework.context.annotation.Configuration;
 public class SpringDocConfig {
 
     @Bean
-    public OpenAPI agileBootApi() {
+    public OpenAPI pulseApi() {
         return new OpenAPI()
             .info(new Info().title("Agileboot后台管理系统")
                 .description("Agileboot API 演示")
                 .version("v1.8.0")
-                .license(new License().name("MIT 3.0").url("https://github.com/valarchie/Pulse-Back-End")))
+                .license(new License().name("MIT 3.0").url("https://github.com/pulse-team/pulse-boot")))
             .externalDocs(new ExternalDocumentation()
                 .description("Agileboot后台管理系统接口文档")
                 .url("https://juejin.cn/column/7159946528827080734"));
